@@ -30,6 +30,11 @@
 
 package format.png;
 
+/**
+ TODO
+ - Add JS support using Canvas or an Image with a "data:base64" src.
+ - Use getVector/setVector or flash.Memory for flash10
+*/
 class Tools {
 	
 #if flash

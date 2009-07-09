@@ -1,7 +1,7 @@
 /*
  * format - haXe File Formats
  *
- *  BMP File Format
+ *  JPG File Format
  *  Copyright (C) 2007-2009 Trevor McCauley, Baluta Cristian (hx port) & Robert Sköld (format conversion)
  *
  * Copyright (c) 2009, The haXe Project Contributors
@@ -27,43 +27,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package format.bmp;
 
-/**
- TODO
- - Add JS support using Canvas or an Image with a "data:base64" src.
- - Use getVector/setVector or flash.Memory for flash10
-*/
-class Tools {
-#if flash
-	public static function fromBitmapData( bmp : flash.display.BitmapData ) : format.bmp.Data {
-		var h = { 
-			width: bmp.width, 
-			height: bmp.height
-		};
-		return {
-			header: h,
-			pixels: haxe.io.Bytes.ofData( bmp.getPixels( bmp.rect ) )
-		};
-		
-	}
-	
-	public static function toBitmapData( bmp : format.bmp.Data ) : flash.display.BitmapData {
-		var bitmap = new flash.display.BitmapData( bmp.header.width , bmp.header.height , false );
-		var ba = bmp.pixels.getData();
-#if flash9				
-		ba.position = 0;
-		bitmap.setPixels( bitmap.rect , ba );
-#else	
-		var pos = 0;
-		for( x in 0...bmp.header.width ) {
-			for( y in 0...bmp.header.height ) {
-				// TODO We probably need to extract the colors properly...
-				bitmap.setPixel( x , y , ba[pos++] );
-			}
-		}
-#end
-		return bitmap;
-	}
-#end
+package format.jpg;
+
+typedef Data = {
+	var header : Header;
+	var pixels : haxe.io.Bytes;
+}
+
+typedef Header = {
+	var width : Int;
+	var height : Int;
+	var quality : Int;
 }
